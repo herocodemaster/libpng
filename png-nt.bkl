@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<makefile>
+	<include file="common-nt.bkl"/>
+	
+	<lib id="png" template="hc-common">
+		<define>Strict</define>
+		<define>_CRT_SECURE_NO_DEPRECATE</define>
+		<define>_CRT_NONSTDC_NO_DEPRECATE</define>
+		<include>.$(DIRSEP)</include>
+		<include>..$(DIRSEP)zlib$(DIRSEP)</include>
+		<headers>
+			png.h
+			pngconf.h
+			pnglibconf.h
+		</headers>
+		<sources>
+			png.c
+			pngset.c
+			pngget.c
+			pngrutil.c
+			pngtrans.c
+			pngwutil.c
+			pngread.c
+			pngrio.c
+			pngwio.c
+			pngwrite.c
+			pngrtran.c
+			pngwtran.c
+			pngmem.c
+			pngerror.c
+			pngpread.c
+		</sources>
+		<runtime-libs>$(HC_RUNTIME_DEFINE)</runtime-libs>
+		<debug-info>on</debug-info>
+		<debug-runtime-libs>$(HC_RUNTIME_DEBUG_DEFINE)</debug-runtime-libs>
+		<optimize>$(HC_OPTIMIZE_ENABLE)</optimize>
+		<threading>multi</threading>
+	</lib>
+</makefile>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<makefile>
+
+	<include file="common-linux.bkl"/>
+	
+	<lib id="png">
+		<define>UNA_PLATFORM_LINUX=1</define>
+		<define>_GNU_SOURCE</define>
+		<define>_LARGEFILE_SOURCE</define>
+		<define>_FILE_OFFSET_BITS=64</define>
+		<include>.$(DIRSEP)</include>
+		<include>..$(DIRSEP)zlib$(DIRSEP)</include>
+		<headers>
+			png.h
+			pngconf.h
+			pnglibconf.h
+		</headers>
+		<sources>
+			png.c
+			pngset.c
+			pngget.c
+			pngrutil.c
+			pngtrans.c
+			pngwutil.c
+			pngread.c
+			pngrio.c
+			pngwio.c
+			pngwrite.c
+			pngrtran.c
+			pngwtran.c
+			pngmem.c
+			pngerror.c
+			pngpread.c
+		</sources>
+		<cflags>-Wall -Wextra -Wno-unused-parameter</cflags>
+		<optimize>$(HC_OPTIMIZE_ENABLE)</optimize>
+		<debug-info>$(HC_DEBUG_ENABLE)</debug-info>
+		<threading>multi</threading>
+		<postlink-command>cp -f $(BUILDDIR)$(DIRSEP)libpng.a $(BUILDDIR)$(DIRSEP)libpng.lib</postlink-command>
+	</lib>
+
+</makefile>

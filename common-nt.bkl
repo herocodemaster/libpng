@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<makefile>
+	<requires version="0.2.5"/>
+
+	<if cond="not isdefined('SHARED')">
+		<set var="HC_SHARED_DEFAULT" overwrite="0">0</set>
+		<option name="SHARED">
+			<values>0,1</values>
+			<values-description>,DLL</values-description>
+			<default-value>$(HC_SHARED_DEFAULT)</default-value>
+			<description>
+				Use DLL build
+			</description>
+		</option>
+	</if>
+	
+	<if cond="not isdefined('SIGN')">
+		<set var="HC_SIGNALL_DEFAULT" overwrite="1">1</set>
+		<option name="SIGN">
+			<values>0,1</values>
+			<values-description>,SIGN</values-description>
+			<default-value>$(HC_SIGNALL_DEFAULT)</default-value>
+			<description>
+				Sign output
+			</description>
+		</option>
+	</if>
+	
+
+	<if cond="not isdefined('UNICODE')">
+		<set var="HC_UNICODE_DEFAULT" overwrite="0">1</set>
+		<option name="UNICODE">
+			<values>0,1</values>
+			<values-description>,Unicode</values-description>
+			<default-value>$(HC_UNICODE_DEFAULT)</default-value>
+			<description>
+				Compile Unicode build of HunterCenter
+			</description>
+		</option>
+	</if>
+
+	<if cond="not isdefined('DEBUG')">
+		<set var="HC_DEBUG_DEFAULT" overwrite="0">1</set>
+		<option name="DEBUG">
+			<values>0,1</values>
+			<values-description>Release,Debug</values-description>
+			<default-value>$(HC_DEBUG_DEFAULT)</default-value>
+			<description>
+				Use debug build of HunterCenter
+			</description>
+		</option>
+	</if>
+	
+	<if cond="not isdefined('USE_THREADS')">
+		<set var="HC_USE_THREADS_DEFAULT" overwrite="0">1</set>
+		<option name="USE_THREADS">
+			<values>0,1</values>
+			<default-value>$(HC_USE_THREADS_DEFAULT)</default-value>
+		</option>
+	</if>
+	
+	<if cond="not isdefined('ARCH')">
+		<set var="HC_ARCH_DEFAULT" overwrite="0">i386</set>
+		<option name="ARCH">
+			<values>i386,x86_64</values>
+			<default-value>$(HC_ARCH_DEFAULT)</default-value>
+		</option>
+	</if>
+	
+	<if cond="not isdefined('TOOL_CHAIN')">
+		<set var="HC_TOOL_CHAIN_DEFAULT" overwrite="0">vc2008</set>
+		<option name="TOOL_CHAIN">
+			<values>vc2008,vc2003,vc6,vc2010,icc2013</values>
+			<default-value>$(HC_TOOL_CHAIN_DEFAULT)</default-value>
+		</option>
+	</if>
+	
+	<if cond="not isdefined('UNABASE_PATH')">
+		<set var="HC_UNABASE_PATH_DEFAULT" overwrite="0">'E:/WINDDK/UnaBase'</set>
+		<option name="UNABASE_PATH" category="path">
+			<default-value>$(HC_UNABASE_PATH_DEFAULT)</default-value>
+			<description>
+				The path of UnaBase
+			</description>
+		</option>
+	</if>
+	
+	<if cond="not isdefined('SDK_PATH')">
+		<set var="HC_SDK_PATH_DEFAULT" overwrite="0">'C:/Program Files/Microsoft SDKs/Windows/v6.0A'</set>
+		<option name="SDK_PATH" category="path">
+			<default-value>$(HC_SDK_PATH_DEFAULT)</default-value>
+			<description>
+				The path of SDK
+			</description>
+		</option>
+	</if>
+	
+	<if cond="not isdefined('WTL_PATH')">
+		<set var="HC_WTL_PATH_DEFAULT" overwrite="0">'E:/WINDDK/WTL'</set>
+		<option name="WTL_PATH" category="path">
+			<default-value>$(HC_WTL_PATH_DEFAULT)</default-value>
+			<description>
+				The path of WTL
+			</description>
+		</option>
+	</if>
+	
+
+	<set var="HCUNICODE_DEFINE">
+		<if cond="UNICODE=='1'">UNICODE</if>
+		<if cond="UNICODE=='0'">MBCS</if>
+	</set>
+	
+	<set var="HC_UNICODE_DEFINE">
+		<if cond="UNICODE=='1'">_UNICODE</if>
+		<if cond="UNICODE=='0'">_MBCS</if>
+	</set>
+	
+	<set var="HCDEBUG_DEFINE">
+		<if cond="DEBUG=='1'">DEBUG</if>
+		<if cond="DEBUG=='0'">NDEBUG</if>
+	</set>
+	
+	<set var="HC_DEBUG_DEFINE">
+		<if cond="DEBUG=='1'">_DEBUG</if>
+	</set>
+	
+	<set var="HC_DR_DEFINE">
+		<if cond="DEBUG=='1'">Debug</if>
+		<if cond="DEBUG=='0'">Release</if>
+	</set>
+	
+	<set var="HC_DR_POSTFIX_DEFINE">
+		<if cond="DEBUG=='1'">D</if>
+	</set>
+	
+	<set var="HC_LIB64ARCH_DEFINE">
+		<if cond="ARCH=='x86_64'">64</if>
+	</set>
+	
+	<set var="HC_BUILD_DEFINE">
+		<if cond="SHARED=='1'">$(TOOL_CHAIN)_clibd_$(HC_DR_DEFINE)_dll</if>
+		<if cond="SHARED=='0'">$(TOOL_CHAIN)_clibs_$(HC_DR_DEFINE)_lib</if>
+	</set>
+	
+	<set var="HC_CXXFLAGS_CLIB_DEFINE">
+		<if cond="SHARED=='1'">D</if>
+		<if cond="SHARED=='0'">T</if>
+	</set>
+	
+	<set var="HC_CXXFLAGS_DEBUG_DEFINE">
+		<if cond="DEBUG=='1'">d</if>
+		<if cond="DEBUG=='0'"></if>
+	</set>
+	
+	<set var="HC_CXXFLAGS_DEFINE">
+		/M$(HC_CXXFLAGS_CLIB_DEFINE)$(HC_CXXFLAGS_DEBUG_DEFINE)
+	</set>
+	
+	<set var="HC_RUNTIME_DEFINE">
+		<if cond="SHARED=='0'">static</if>
+		<if cond="SHARED=='1'">dynamic</if>
+	</set>
+	
+	<set var="HC_RUNTIME_DEBUG_DEFINE">
+		<if cond="DEBUG=='1'">on</if>
+		<if cond="DEBUG=='0'">off</if>
+	</set>
+
+	<set var="HC_DEBUG_ENABLE">
+		<if cond="DEBUG=='1'">on</if>
+		<if cond="DEBUG=='0'">off</if>
+	</set>
+
+	<set var="HC_OPTIMIZE_ENABLE">
+		<if cond="DEBUG=='1'"></if>
+		<if cond="DEBUG=='0'">speed</if>
+	</set>
+	
+	<set var="HC_SIGNALL">
+		<if cond="SIGN=='1'">@signall.cmd </if>
+		<if cond="SIGN=='0'">@echo </if>
+	</set>
+	
+	<set var="BUILDDIR">
+		.$(DIRSEP)bin$(DIRSEP)$(HC_BUILD_DEFINE)
+	</set>
+	
+
+	<define-tag name="__hc-syslibs" rules="exe,dll,module,lib">
+		<sys-lib>kernel32</sys-lib>
+		<sys-lib>user32</sys-lib>
+		<sys-lib>gdi32</sys-lib>
+		<sys-lib>comdlg32</sys-lib>
+		<sys-lib>winspool</sys-lib>
+		<sys-lib>winmm</sys-lib>
+		<sys-lib>shell32</sys-lib>
+		<sys-lib>comctl32</sys-lib>
+		<sys-lib>ole32</sys-lib>
+		<sys-lib>oleaut32</sys-lib>
+		<sys-lib>uuid</sys-lib>
+		<sys-lib>rpcrt4</sys-lib>
+		<sys-lib>advapi32</sys-lib>
+		<sys-lib>wsock32</sys-lib>
+		<sys-lib>odbc32</sys-lib>
+		<sys-lib>oleacc</sys-lib>
+	</define-tag>
+	
+	<define-tag name="__hc-UnaBase" rules="exe,dll,module,lib">
+		<if cond="value=='UnaBase'"><include>"$(UNABASE_PATH)$(DIRSEP)inc"</include></if>
+		<if cond="value=='UnaBase'"><sys-lib>"$(UNABASE_PATH)$(DIRSEP)lib$(HC_LIB64ARCH_DEFINE)$(DIRSEP)$(HC_BUILD_DEFINE)$(DIRSEP)UnaBase$(HC_DR_POSTFIX_DEFINE)"</sys-lib></if>
+	</define-tag>
+	
+	<define-tag name="__hc-SDK" rules="exe,dll,module,lib">
+		<if cond="value=='SDK'"><include>"$(SDK_PATH)$(DIRSEP)include"</include></if>
+		<if cond="value=='SDK'"><lib-path>"$(SDK_PATH)$(DIRSEP)lib"</lib-path></if>
+	</define-tag>
+	
+	<define-tag name="__hc-WTL" rules="exe,dll,module,lib">
+		<if cond="value=='WTL'"><include>"$(WTL_PATH)$(DIRSEP)include"</include></if>
+	</define-tag>
+	
+	<define-tag name="__hc-UnaDbMdb" rules="exe,dll,module,lib">
+		<if cond="value=='UnaDbMdb'"><sys-lib>"$(UNABASE_PATH)$(DIRSEP)lib$(HC_LIB64ARCH_DEFINE)$(DIRSEP)$(HC_BUILD_DEFINE)$(DIRSEP)libunamdb"</sys-lib></if>
+	</define-tag>
+	
+	<define-tag name="__hc-UnaEvent" rules="exe,dll,module,lib">
+		<if cond="value=='UnaEvent'"><sys-lib>"$(UNABASE_PATH)$(DIRSEP)lib$(HC_LIB64ARCH_DEFINE)$(DIRSEP)$(HC_BUILD_DEFINE)$(DIRSEP)libevent"</sys-lib></if>
+	</define-tag>
+	
+	<template id="hc-common">
+		<define>$(HCUNICODE_DEFINE)</define>
+		<define>$(HC_UNICODE_DEFINE)</define>
+		<define>$(HCDEBUG_DEFINE)</define>
+		<define>$(HC_DEBUG_DEFINE)</define>
+		<__hc-syslibs/>
+	</template>
+	
+	<define-tag name="rmfiles" rules="action">
+		<clean-files>$(value)</clean-files>
+	</define-tag>
+
+	<!-- Recursively removes the $(value) file from the current folder. -->
+	<!-- Usage sample:                                                  -->
+	<!--          <action id="deepclean">                               -->
+	<!--              <rmfile-rec>$(BUILDDIR)/*.o</rmfile>              -->
+	<!--          </action>                                             -->
+	<define-tag name="rmfile-rec" rules="action">
+		<if cond="TOOLSET=='win32'"><command>-del /S $(value)</command></if>
+	</define-tag>
+
+	<!-- Removes the $(value) folder.                                   -->
+	<!-- Usage sample:                                                  -->
+	<!--          <action id="uninstall-scripts">                       -->
+	<!--              <rmdir>$(DATADIR)/myscripts</rmdir>               -->
+	<!--          </action>                                             -->
+	<define-tag name="rmdir" rules="action">
+		<command>-if exist $(value) rmdir /S /Q $(value)</command>
+	</define-tag>
+	
+	
+	
+</makefile>
