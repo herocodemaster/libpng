@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<makefile>
+	<include file="../../../uits_build/build/linux/common.bkl"/>
+	
+	<lib id="png">
+		<define>UNA_PLATFORM_LINUX=1</define>
+		<define>_GNU_SOURCE</define>
+		<define>_LARGEFILE_SOURCE</define>
+		<define>_FILE_OFFSET_BITS=64</define>
+		<include>..$(DIRSEP)..$(DIRSEP)</include>
+		<include>..$(DIRSEP)..$(DIRSEP)..$(DIRSEP)zlib$(DIRSEP)</include>
+		<headers>
+			png.h
+			pngconf.h
+			pnglibconf.h
+		</headers>
+		<sources>
+			..$(DIRSEP)..$(DIRSEP)png.c
+			..$(DIRSEP)..$(DIRSEP)pngset.c
+			..$(DIRSEP)..$(DIRSEP)pngget.c
+			..$(DIRSEP)..$(DIRSEP)pngrutil.c
+			..$(DIRSEP)..$(DIRSEP)pngtrans.c
+			..$(DIRSEP)..$(DIRSEP)pngwutil.c
+			..$(DIRSEP)..$(DIRSEP)pngread.c
+			..$(DIRSEP)..$(DIRSEP)pngrio.c
+			..$(DIRSEP)..$(DIRSEP)pngwio.c
+			..$(DIRSEP)..$(DIRSEP)pngwrite.c
+			..$(DIRSEP)..$(DIRSEP)pngrtran.c
+			..$(DIRSEP)..$(DIRSEP)pngwtran.c
+			..$(DIRSEP)..$(DIRSEP)pngmem.c
+			..$(DIRSEP)..$(DIRSEP)pngerror.c
+			..$(DIRSEP)..$(DIRSEP)pngpread.c
+		</sources>
+		<cflags>-Wall -Wextra -Wno-unused-parameter</cflags>
+		<optimize>$(HC_OPTIMIZE_ENABLE)</optimize>
+		<debug-info>$(HC_DEBUG_ENABLE)</debug-info>
+		<threading>multi</threading>
+		<postlink-command>cp -f $(BUILDDIR)$(DIRSEP)libpng.a $(BUILDDIR)$(DIRSEP)libpng.lib</postlink-command>
+	</lib>
+
+</makefile>

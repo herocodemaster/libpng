@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<makefile>
+	<include file="../../../uits_build/build/nt/Common.bkl"/>
+	
+	<lib id="png" template="hc-common">
+		<libname>png$(HC_DR_POSTFIX_DEFINE)$(HC_LIB64ARCH_DEFINE)</libname>
+		<define>Strict</define>
+		<define>_CRT_SECURE_NO_DEPRECATE</define>
+		<define>_CRT_NONSTDC_NO_DEPRECATE</define>
+		<include>..$(DIRSEP)..$(DIRSEP)</include>
+		<include>..$(DIRSEP)..$(DIRSEP)..$(DIRSEP)zlib$(DIRSEP)</include>
+		<headers>
+			png.h
+			pngconf.h
+			pnglibconf.h
+		</headers>
+		<sources>
+			..$(DIRSEP)..$(DIRSEP)png.c
+			..$(DIRSEP)..$(DIRSEP)pngset.c
+			..$(DIRSEP)..$(DIRSEP)pngget.c
+			..$(DIRSEP)..$(DIRSEP)pngrutil.c
+			..$(DIRSEP)..$(DIRSEP)pngtrans.c
+			..$(DIRSEP)..$(DIRSEP)pngwutil.c
+			..$(DIRSEP)..$(DIRSEP)pngread.c
+			..$(DIRSEP)..$(DIRSEP)pngrio.c
+			..$(DIRSEP)..$(DIRSEP)pngwio.c
+			..$(DIRSEP)..$(DIRSEP)pngwrite.c
+			..$(DIRSEP)..$(DIRSEP)pngrtran.c
+			..$(DIRSEP)..$(DIRSEP)pngwtran.c
+			..$(DIRSEP)..$(DIRSEP)pngmem.c
+			..$(DIRSEP)..$(DIRSEP)pngerror.c
+			..$(DIRSEP)..$(DIRSEP)pngpread.c
+		</sources>
+		<runtime-libs>$(HC_RUNTIME_DEFINE)</runtime-libs>
+		<debug-info>on</debug-info>
+		<debug-runtime-libs>$(HC_RUNTIME_DEBUG_DEFINE)</debug-runtime-libs>
+		<optimize>$(HC_OPTIMIZE_ENABLE)</optimize>
+		<threading>multi</threading>
+		<postlink-command>if not exist $(RELEASE_LIB_DIR) mkdir $(RELEASE_LIB_DIR)</postlink-command>
+		<postlink-command>copy /y $(BUILDDIR)$(DIRSEP)png$(HC_DR_POSTFIX_DEFINE)$(HC_LIB64ARCH_DEFINE).lib $(RELEASE_LIB_DIR)</postlink-command>
+		<postlink-command>copy /y $(BUILDDIR)$(DIRSEP)png$(HC_DR_POSTFIX_DEFINE)$(HC_LIB64ARCH_DEFINE).pdb $(RELEASE_LIB_DIR)</postlink-command>
+	</lib>
+</makefile>
