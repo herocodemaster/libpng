@@ -31,6 +31,9 @@ DEBUG ?= 1
 # Use ICC build [0,1]
 ICC ?= 0
 
+#  [i386,x86_64,x86,x86_amd64,arm,aarch32,arm_64,aarch64]
+ARCH ?= x86
+
 
 
 # -------------------------------------------------------------------------
@@ -45,21 +48,21 @@ PNG_CFLAGS = -DUNA_PLATFORM_LINUX=1 -D_GNU_SOURCE -D_LARGEFILE_SOURCE \
 	$(__HC_DEBUG_ENABLE_1) -D_THREAD_SAFE -pthread -Wall -Wextra \
 	-Wno-unused-parameter $(CPPFLAGS) $(CFLAGS)
 PNG_OBJECTS =  \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_png.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngset.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngget.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngrutil.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngtrans.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwutil.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngread.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngrio.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwio.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwrite.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngrtran.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwtran.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngmem.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngerror.o \
-	../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngpread.o
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_png.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngset.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngget.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngrutil.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngtrans.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwutil.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngread.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngrio.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwio.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwrite.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngrtran.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwtran.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngmem.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngerror.o \
+	../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngpread.o
 
 ### Conditionally set variables: ###
 
@@ -75,6 +78,30 @@ endif
 ifeq ($(ICC),1)
 HC_DR_ICC_DEFINE = -icc
 endif
+ifeq ($(ARCH),i386)
+HC_LIB64ARCH_DEFINE = 
+endif
+ifeq ($(ARCH),x86)
+HC_LIB64ARCH_DEFINE = 
+endif
+ifeq ($(ARCH),x86_64)
+HC_LIB64ARCH_DEFINE = 64
+endif
+ifeq ($(ARCH),x86_amd64)
+HC_LIB64ARCH_DEFINE = 64
+endif
+ifeq ($(ARCH),arm)
+HC_LIB64ARCH_DEFINE = 
+endif
+ifeq ($(ARCH),aarch32)
+HC_LIB64ARCH_DEFINE = 
+endif
+ifeq ($(ARCH),arm_64)
+HC_LIB64ARCH_DEFINE = 64
+endif
+ifeq ($(ARCH),aarch64)
+HC_LIB64ARCH_DEFINE = 64
+endif
 ifeq ($(DEBUG),0)
 __HC_OPTIMIZE_ENABLE_0 = -O2
 endif
@@ -89,76 +116,76 @@ __HC_DEBUG_ENABLE_1 = -g
 endif
 
 
-all: ../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE):
-	@mkdir -p ../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)
+all: ../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE):
+	@mkdir -p ../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)
 
 ### Targets: ###
 
-all: ../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/libpng.a
+all: ../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/libpng.a
 
 install: 
 
 uninstall: 
 
 clean: 
-	rm -f ../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/*.o
-	rm -f ../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/*.d
-	rm -f ../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/libpng.a
+	rm -f ../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/*.o
+	rm -f ../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/*.d
+	rm -f ../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/libpng.a
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/libpng.a: $(PNG_OBJECTS)
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/libpng.a: $(PNG_OBJECTS)
 	rm -f $@
 	$(AR) rcu $@ $(PNG_OBJECTS)
 	$(RANLIB) $@
-	cp -f ../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/libpng.a ../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/libpng.lib
+	cp -f ../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/libpng.a ../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/libpng.lib
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_png.o: ./../../png.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_png.o: ./../../png.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngset.o: ./../../pngset.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngset.o: ./../../pngset.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngget.o: ./../../pngget.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngget.o: ./../../pngget.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngrutil.o: ./../../pngrutil.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngrutil.o: ./../../pngrutil.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngtrans.o: ./../../pngtrans.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngtrans.o: ./../../pngtrans.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwutil.o: ./../../pngwutil.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwutil.o: ./../../pngwutil.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngread.o: ./../../pngread.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngread.o: ./../../pngread.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngrio.o: ./../../pngrio.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngrio.o: ./../../pngrio.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwio.o: ./../../pngwio.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwio.o: ./../../pngwio.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwrite.o: ./../../pngwrite.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwrite.o: ./../../pngwrite.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngrtran.o: ./../../pngrtran.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngrtran.o: ./../../pngrtran.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwtran.o: ./../../pngwtran.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngwtran.o: ./../../pngwtran.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngmem.o: ./../../pngmem.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngmem.o: ./../../pngmem.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngerror.o: ./../../pngerror.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngerror.o: ./../../pngerror.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
-../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngpread.o: ./../../pngpread.c
+../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/png_pngpread.o: ./../../pngpread.c
 	$(CC) -c -o $@ $(PNG_CFLAGS) $(CPPDEPS) $<
 
 .PHONY: all install uninstall clean
 
 
 # Dependencies tracking:
--include ../../bin/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/*.d
+-include ../../bin$(HC_LIB64ARCH_DEFINE)/linux_$(HC_DR_DEFINE)$(HC_DR_ICC_DEFINE)/*.d
