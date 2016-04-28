@@ -42,6 +42,9 @@ ARCH = i386
 #  [vc2008,vc2003,vc6,vc2010,icc2013,vc2013,icc2016]
 TOOL_CHAIN = vc2008
 
+#  [60,65,70,75]
+CUDA = 65
+
 
 
 # -------------------------------------------------------------------------
@@ -85,6 +88,12 @@ HC_DR_DEFINE = Debug
 !endif
 !if "$(DEBUG)" == "1"
 HC_DR_POSTFIX_DEFINE = D
+!endif
+!if "$(ARCH)" == "i386"
+HC_LIB64ARCH_DEFINE = 
+!endif
+!if "$(ARCH)" == "x86"
+HC_LIB64ARCH_DEFINE = 
 !endif
 !if "$(ARCH)" == "x86_64"
 HC_LIB64ARCH_DEFINE = 64

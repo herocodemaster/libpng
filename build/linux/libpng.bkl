@@ -3,6 +3,7 @@
 	<include file="../../../uits_build/build/linux/common.bkl"/>
 	
 	<lib id="png">
+		<libname>png$(HC_LIB64ARCH_DEFINE)</libname>
 		<define>UNA_PLATFORM_LINUX=1</define>
 		<define>_GNU_SOURCE</define>
 		<define>_LARGEFILE_SOURCE</define>
@@ -31,11 +32,15 @@
 			..$(DIRSEP)..$(DIRSEP)pngerror.c
 			..$(DIRSEP)..$(DIRSEP)pngpread.c
 		</sources>
+		<cflags>-fPIC -DPIC</cflags>
+		<cflags>$(HC_ARCH_CFLAGS_DEFINE)</cflags>
 		<cflags>-Wall -Wextra -Wno-unused-parameter</cflags>
 		<optimize>$(HC_OPTIMIZE_ENABLE)</optimize>
 		<debug-info>$(HC_DEBUG_ENABLE)</debug-info>
 		<threading>multi</threading>
-		<postlink-command>cp -f $(BUILDDIR)$(DIRSEP)libpng.a $(BUILDDIR)$(DIRSEP)libpng.lib</postlink-command>
+		<postlink-command>cp -f $(BUILDDIR)$(DIRSEP)libpng$(HC_LIB64ARCH_DEFINE).a $(BUILDDIR)$(DIRSEP)libpng$(HC_LIB64ARCH_DEFINE).lib</postlink-command>
+		<postlink-command>mkdir -p $(RELEASE_LIB_DIR)</postlink-command>
+		<postlink-command>cp -f $(BUILDDIR)$(DIRSEP)libpng$(HC_LIB64ARCH_DEFINE).lib $(RELEASE_LIB_DIR)</postlink-command>
 	</lib>
 
 </makefile>

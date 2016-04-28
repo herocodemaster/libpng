@@ -6,3 +6,5 @@
 /vc2013_clibs_Debug_lib
 /icc2016_clibs_Release_lib
 /icc2016_clibs_Debug_lib
+/linux_release-arm
+/linux_debug-arm
