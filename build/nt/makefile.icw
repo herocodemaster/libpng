@@ -45,6 +45,9 @@ TOOL_CHAIN = vc2008
 #  [60,65,70,75]
 CUDA = 65
 
+# Build contrib librarys [0,1]
+CONTRIB = 0
+
 
 
 # -------------------------------------------------------------------------
@@ -106,6 +109,14 @@ HC_BUILD_DEFINE = $(TOOL_CHAIN)_clibs_$(HC_DR_DEFINE)_lib
 !endif
 !if "$(SHARED)" == "1"
 HC_BUILD_DEFINE = $(TOOL_CHAIN)_clibd_$(HC_DR_DEFINE)_dll
+!endif
+!if "$(CONTRIB)" == "0"
+RELEASE_LIB_DIR = \
+	..\..\..\uits_build\lib$(HC_LIB64ARCH_DEFINE)\$(HC_BUILD_DEFINE)
+!endif
+!if "$(CONTRIB)" == "1"
+RELEASE_LIB_DIR = \
+	..\..\..\uits_build\contrib\lib$(HC_LIB64ARCH_DEFINE)\$(HC_BUILD_DEFINE)
 !endif
 !if "$(UNICODE)" == "0"
 __HCUNICODE_DEFINE_p = /DMBCS
@@ -179,9 +190,9 @@ clean:
 	lib /NOLOGO /OUT:$@ @<<
 	$(PNG_OBJECTS)
 <<
-	if not exist ..\..\..\uits_build\lib$(HC_LIB64ARCH_DEFINE)\$(HC_BUILD_DEFINE) mkdir ..\..\..\uits_build\lib$(HC_LIB64ARCH_DEFINE)\$(HC_BUILD_DEFINE)
-	copy /y ..\..\bin$(HC_LIB64ARCH_DEFINE)\$(HC_BUILD_DEFINE)\png$(HC_LIB64ARCH_DEFINE)$(HC_DR_POSTFIX_DEFINE).lib ..\..\..\uits_build\lib$(HC_LIB64ARCH_DEFINE)\$(HC_BUILD_DEFINE)
-	copy /y ..\..\bin$(HC_LIB64ARCH_DEFINE)\$(HC_BUILD_DEFINE)\png$(HC_LIB64ARCH_DEFINE)$(HC_DR_POSTFIX_DEFINE).pdb ..\..\..\uits_build\lib$(HC_LIB64ARCH_DEFINE)\$(HC_BUILD_DEFINE)
+	if not exist $(RELEASE_LIB_DIR) mkdir $(RELEASE_LIB_DIR)
+	copy /y ..\..\bin$(HC_LIB64ARCH_DEFINE)\$(HC_BUILD_DEFINE)\png$(HC_LIB64ARCH_DEFINE)$(HC_DR_POSTFIX_DEFINE).lib $(RELEASE_LIB_DIR)
+	copy /y ..\..\bin$(HC_LIB64ARCH_DEFINE)\$(HC_BUILD_DEFINE)\png$(HC_LIB64ARCH_DEFINE)$(HC_DR_POSTFIX_DEFINE).pdb $(RELEASE_LIB_DIR)
 
 ..\..\bin$(HC_LIB64ARCH_DEFINE)\$(HC_BUILD_DEFINE)\png_png.obj: .\..\..\png.c
 	$(CC) /c /nologo /TC /Fo$@ $(PNG_CFLAGS) .\..\..\png.c
