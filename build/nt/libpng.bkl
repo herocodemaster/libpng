@@ -37,6 +37,8 @@
 		<debug-runtime-libs>$(HC_RUNTIME_DEBUG_DEFINE)</debug-runtime-libs>
 		<optimize>$(HC_OPTIMIZE_ENABLE)</optimize>
 		<threading>multi</threading>
+		<postlink-command>if not exist $(RELEASE_INC_DIR)$(DIRSEP)libpng mkdir $(RELEASE_INC_DIR)$(DIRSEP)libpng</postlink-command>
+		<postlink-command>copy /y ..$(DIRSEP)..$(DIRSEP)*.h $(RELEASE_INC_DIR)$(DIRSEP)libpng</postlink-command>
 		<postlink-command>if not exist $(RELEASE_LIB_DIR) mkdir $(RELEASE_LIB_DIR)</postlink-command>
 		<postlink-command>copy /y $(BUILDDIR)$(DIRSEP)png$(HC_LIB64ARCH_DEFINE)$(HC_DR_POSTFIX_DEFINE).lib $(RELEASE_LIB_DIR)</postlink-command>
 		<postlink-command>copy /y $(BUILDDIR)$(DIRSEP)png$(HC_LIB64ARCH_DEFINE)$(HC_DR_POSTFIX_DEFINE).pdb $(RELEASE_LIB_DIR)</postlink-command>
