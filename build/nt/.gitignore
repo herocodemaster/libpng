@@ -1,1 +1,5 @@
 /*.bak
+/makefile.vc64
+/makefile.icw
+/makefile.icw64
+/makefile.vc
