@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <makefile>
-	<include file="../../../uits_build/build/linux/common.bkl"/>
+	<include file="common.bkl"/>
 	
 	<lib id="png">
 		<libname>png$(HC_LIB64ARCH_DEFINE)</libname>
