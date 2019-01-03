@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <makefile>
-	<include file="../../../uits_build/build/nt/Common.bkl"/>
+	<include file="./Common.bkl"/>
 	
 	<lib id="png" template="hc-common">
 		<libname>png$(HC_LIB64ARCH_DEFINE)$(HC_DR_POSTFIX_DEFINE)</libname>
